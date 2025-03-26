@@ -5,6 +5,9 @@ public class PlayerController : MonoBehaviour
 {
     private InputAction moveAction;
     private Rigidbody rb;
+    public Transform spawner;
+    public GameObject bullet;
+
     public int speed;
     public int turnSpeed = 100;
 
@@ -26,6 +29,12 @@ public class PlayerController : MonoBehaviour
         if (horiAction!= 0)
         {
             transform.Rotate( Vector3.up , horiAction * turnSpeed * Time.deltaTime);
+        }
+        
+        if (Input.GetMouseButtonDown(0)) //note : 0 = Left , 1 = Right , 2 = Middle
+        {
+            Debug.Log("you clicked");
+            Instantiate(bullet, spawner.transform.position , Quaternion.identity );
         }
 /*
         if ( Health == 0 )
