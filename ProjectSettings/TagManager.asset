@@ -8,6 +8,7 @@ TagManager:
   - trigger
   - bullet
   - bear
+  - honey
   layers:
   - Default
   - TransparentFX

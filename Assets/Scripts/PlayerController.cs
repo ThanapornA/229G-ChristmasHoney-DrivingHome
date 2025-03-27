@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -7,12 +9,18 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     public Transform spawner;
     public GameObject bullet;
+    public GameObject honey;
+    public RawImage[] Heart;
+
+    public HoneySpawner honeySpawner;
 
     public int speed;
     public int turnSpeed = 100;
 
     public int Health = 5;
+
     public int HoneyCollected = 0;
+    public bool isHoneyCollected = false;
 
     void Start()
     {
@@ -33,13 +41,22 @@ public class PlayerController : MonoBehaviour
         
         if (Input.GetMouseButtonDown(0)) //note : 0 = Left , 1 = Right , 2 = Middle
         {
-            Debug.Log("you clicked");
+            Debug.Log("bullet spawned");
             Instantiate(bullet, spawner.transform.position , Quaternion.identity );
         }
 /*
         if ( Health == 0 )
         {
 
+        }*/
+        /*
+        if ( HoneyCollected >= 1 )
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Debug.Log("honey thrown");
+                Instantiate( honey , spawner.transform.position , Quaternion.identity );
+            }
         }*/
     }
     
@@ -49,12 +66,22 @@ public class PlayerController : MonoBehaviour
         {
             Health -= 1;
             Debug.Log("you hit" + Health);
-        }
 
-        /*if (collision.gameObject.CompareTag("honey"))
+            Destroy(Heart[Health]);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("honey"))
         {
+            Debug.Log("you collected" + HoneyCollected);
             HoneyCollected += 1;
-        }*/
+            honeySpawner.honeySpawned -= 1;
+
+            isHoneyCollected = true;
+            //Destroy();
+        }
     }
 /*
     private void OnTriggerEnter(Collider collider)

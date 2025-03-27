@@ -1,8 +1,12 @@
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class Raycast : MonoBehaviour
 {
     private Camera cam;
+
+    public TextMeshProUGUI obstacleText;
 
     void Start()
     {
@@ -23,15 +27,15 @@ public class Raycast : MonoBehaviour
 
             if(Physics.Raycast(ray,out hit,100))
             {
-                Debug.Log("eyyyyykoinnit!");
-
                 if (hit.collider.CompareTag("obstacles"))
                 {
+                    obstacleText.text = "this is an obstacle!! Avoid hittig it";
                     Debug.Log("this is an obstacle");
                 }
                 else if (hit.collider.CompareTag("bear"))
                 {
-                    Debug.Log("this is an bear");
+                    obstacleText.text = "these are bears!! Throw collected honey to distract them";
+                    Debug.Log("this is a bear");
                 }
             }
         }
