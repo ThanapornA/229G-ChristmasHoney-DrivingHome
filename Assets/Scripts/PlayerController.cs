@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public GameObject bullet;
     public GameObject honey;
     public RawImage[] Heart;
+    public RawImage[] HoneyIcon;
 
     public HoneySpawner honeySpawner;
 
@@ -18,18 +19,27 @@ public class PlayerController : MonoBehaviour
     public int turnSpeed = 100;
 
     public int Health = 5;
+    public int HoneyIconActivated = 0;
 
     public int HoneyCollected = 0;
     public bool isHoneyCollected = false;
+    public float force;
+    public float mass;
+    public float acceleration;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        mass  = GetComponent<Rigidbody>().mass;
+
+        acceleration = this.rb.linearVelocity.magnitude; //note : magnitude = convert vector3 to one value
+
         moveAction = InputSystem.actions.FindAction("Move");
     }
 
     void Update()
     {
+        Newton2();
         float horiAction = moveAction.ReadValue<Vector2>().x;
         float verticalAction = moveAction.ReadValue<Vector2>().y;
         rb.AddForce( verticalAction * transform.right * speed , ForceMode.Force);
@@ -59,7 +69,12 @@ public class PlayerController : MonoBehaviour
             }
         }*/
     }
-    
+    void Newton2()
+    {
+        force = mass * acceleration;
+        force = speed;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("obstacles"))
@@ -80,7 +95,10 @@ public class PlayerController : MonoBehaviour
             honeySpawner.honeySpawned -= 1;
 
             isHoneyCollected = true;
-            //Destroy();
+            Destroy(other.gameObject);
+
+            HoneyIcon[HoneyIconActivated].gameObject.SetActive(true);
+            HoneyIconActivated += 1;
         }
     }
 /*
