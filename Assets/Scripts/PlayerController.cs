@@ -89,6 +89,10 @@ public class PlayerController : MonoBehaviour
 
             Destroy(Heart[Health]);
         }
+
+        if (collision.gameObject.CompareTag("Finish"))
+        {
+        }
     }
 
     private void OnTriggerEnter(Collider other)

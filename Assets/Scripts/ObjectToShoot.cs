@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class ObjectToShoot : MonoBehaviour
 {
-    public int shootedCount = 0;
     public float speed;
     public Rigidbody rb;
 
-    public bool isThisHoney = true;
+    public bool isThisHoney = false;
 
     void Start()
     {
@@ -22,17 +21,17 @@ public class ObjectToShoot : MonoBehaviour
     {
         if ( !isThisHoney )
         {
-            if (obs.gameObject.CompareTag("obstacles"))
+            if (obs.gameObject.CompareTag("bear"))
             {
-                Debug.Log("you hit an obstacle");
+                Debug.Log("you hit a bear");
                 Destroy(this.gameObject);
             }
         }
         else if ( isThisHoney )
         {
-            if (obs.gameObject.CompareTag("bear"))
+            if (obs.gameObject.CompareTag("obstacles"))
             {
-                Debug.Log("you hit a bear");
+                Debug.Log("you hit an obstacle");
                 Destroy(this.gameObject);
             }
         }

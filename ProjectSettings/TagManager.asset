@@ -10,7 +10,6 @@ TagManager:
   - bear
   - honey
   - honeyshot
-  - honeyShooted
   layers:
   - Default
   - TransparentFX
