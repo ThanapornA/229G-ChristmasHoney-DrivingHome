@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public RawImage[] HoneyIcon;
 
     public HoneySpawner honeySpawner;
+    public GameObject honeyToShoot;
 
     public int speed;
     public int turnSpeed = 100;
@@ -54,21 +55,25 @@ public class PlayerController : MonoBehaviour
             Debug.Log("bullet spawned");
             Instantiate(bullet, spawner.transform.position , Quaternion.identity );
         }
-/*
-        if ( Health == 0 )
-        {
-
-        }*/
-        /*
+        
         if ( HoneyCollected >= 1 )
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Debug.Log("honey thrown");
-                Instantiate( honey , spawner.transform.position , Quaternion.identity );
+                Instantiate( honeyToShoot , spawner.transform.position , Quaternion.identity );
+                HoneyCollected -= 1;
+                Destroy(HoneyIcon[HoneyCollected]);
             }
+        }
+
+        /*
+        if ( Health == 0 )
+        {
+
         }*/
     }
+
     void Newton2()
     {
         force = mass * acceleration;
@@ -101,12 +106,4 @@ public class PlayerController : MonoBehaviour
             HoneyIconActivated += 1;
         }
     }
-/*
-    private void OnTriggerEnter(Collider collider)
-    {
-        if (collider.gameObject.CompareTag("trigger"))
-        {
-            Debug.Log("you triggered");
-        }
-    }*/
 }

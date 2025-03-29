@@ -15,12 +15,16 @@ public class HoneySpawner : MonoBehaviour
 
     void Spawn()
     {
-        if ( honeySpawned <= 2 )
+        if ( honeySpawned < 3 )
         {
             Debug.Log("honey spawned");
             int rndPos = Random.Range(0 , 3);
             Instantiate( Honey , HoneySpawnPoints[rndPos].position , Honey.transform.rotation );
             honeySpawned += 1;
+        }
+        else
+        {
+            CancelInvoke(nameof(Spawn));
         }
     }
 }

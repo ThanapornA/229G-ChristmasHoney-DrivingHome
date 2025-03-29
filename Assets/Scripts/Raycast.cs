@@ -37,6 +37,11 @@ public class Raycast : MonoBehaviour
                     obstacleText.text = "these are bears!! Throw collected honey to distract them";
                     Debug.Log("this is a bear");
                 }
+                else if (hit.collider.CompareTag("honey"))
+                {
+                    obstacleText.text = "this is honey jar! you need this to feed the bear";
+                    Debug.Log("this is a honey jar");
+                }
             }
         }
     }

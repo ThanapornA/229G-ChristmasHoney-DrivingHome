@@ -9,6 +9,8 @@ TagManager:
   - bullet
   - bear
   - honey
+  - honeyshot
+  - honeyShooted
   layers:
   - Default
   - TransparentFX
