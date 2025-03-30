@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -27,6 +28,15 @@ public class PlayerController : MonoBehaviour
     public float force;
     public float mass;
     public float acceleration;
+    
+    public GameObject LoseScreen;
+    public TextMeshProUGUI ReasonText; //ReasonText.text = ""
+    public RawImage WinScene;
+
+    private bool isPaused = false;
+    public GameObject EndPannel;
+    public EndCredits endCredits;
+    public bool iswin = false;
 
     void Start()
     {
@@ -40,6 +50,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (isPaused) return;
+
         Newton2();
         float horiAction = moveAction.ReadValue<Vector2>().x;
         float verticalAction = moveAction.ReadValue<Vector2>().y;
@@ -67,11 +79,19 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        /*
         if ( Health == 0 )
         {
+            ReasonText.text = "you hit obstacles.. your health reach to 0";
 
-        }*/
+            LoseScreen.gameObject.SetActive(true);
+            isPaused = true;
+            rb.isKinematic = true;
+        }
+
+        if ( iswin == true )
+        {
+
+        }
     }
 
     void Newton2()
@@ -90,8 +110,25 @@ public class PlayerController : MonoBehaviour
             Destroy(Heart[Health]);
         }
 
-        if (collision.gameObject.CompareTag("Finish"))
+        if (collision.gameObject.CompareTag("bear"))
         {
+            Health = 0;
+            Debug.Log("you hit a bear" + Health);
+
+            Destroy(Heart[Health]);
+            
+            ReasonText.text = "you hit a bear.. your health reach to 0";
+
+            LoseScreen.gameObject.SetActive(true);
+            isPaused = true;
+            rb.isKinematic = true;
+        }
+
+        if (collision.gameObject.CompareTag("Finish")) //reach the goal
+        {
+            WinScene.gameObject.SetActive(true);
+            isPaused = true;
+            rb.isKinematic = true;
         }
     }
 
@@ -109,5 +146,26 @@ public class PlayerController : MonoBehaviour
             HoneyIcon[HoneyIconActivated].gameObject.SetActive(true);
             HoneyIconActivated += 1;
         }
+    }
+
+    public void Restart()
+    {
+        Debug.Log("Restarting the game...");
+        
+        LoseScreen.gameObject.SetActive(false);
+
+        isPaused = false;
+        rb.isKinematic = false;
+
+        var activeScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(activeScene.name);
+    }
+
+    public void Ok()
+    {
+        iswin = true;
+        WinScene.gameObject.SetActive(false);
+        EndPannel.gameObject.SetActive(true);
+        endCredits.Update();
     }
 }
