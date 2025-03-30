@@ -87,11 +87,6 @@ public class PlayerController : MonoBehaviour
             isPaused = true;
             rb.isKinematic = true;
         }
-
-        if ( iswin == true )
-        {
-
-        }
     }
 
     void Newton2()
